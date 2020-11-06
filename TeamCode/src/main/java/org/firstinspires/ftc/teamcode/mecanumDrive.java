@@ -15,13 +15,13 @@ public class mecanumDrive extends OpMode {
     private Servo armServo = null;
     @Override
     public void init() {
-        backLeftDrive =hardwareMap.get(DcMotor.class,"");
-        backRightDrive = hardwareMap.get(DcMotor.class,"");
-        frontLeftDrive = hardwareMap.get(DcMotor.class,"");
-        frontRightDrive = hardwareMap.get(DcMotor.class,"");
-        armMotorLeft = hardwareMap.get(DcMotor.class,"");
-        armMotorRight = hardwareMap.get(DcMotor.class,"");
-        armServo = hardwareMap.get(Servo.class,"");
+        backLeftDrive =hardwareMap.get(DcMotor.class,"back_left");
+        backRightDrive = hardwareMap.get(DcMotor.class,"back_right");
+        frontLeftDrive = hardwareMap.get(DcMotor.class,"front_left");
+        frontRightDrive = hardwareMap.get(DcMotor.class,"front_right");
+        armMotorLeft = hardwareMap.get(DcMotor.class,"arm_left");
+        armMotorRight = hardwareMap.get(DcMotor.class,"arm_right");
+        armServo = hardwareMap.get(Servo.class,"arm_servo");
     }
 
     @Override
@@ -34,9 +34,9 @@ public class mecanumDrive extends OpMode {
         float gamepad1LeftX = gamepad1.left_stick_x;
         float gamepad1RightX = gamepad1.right_stick_x;
 
-        float FrontLeft = -gamepad1LeftY - gamepad1LeftX + gamepad1RightX;
+        float FrontLeft = gamepad1LeftY - gamepad1LeftX + gamepad1RightX;
         float FrontRight = gamepad1LeftY - gamepad1LeftX + gamepad1RightX;
-        float BackLeft = -gamepad1LeftY + gamepad1LeftX + gamepad1RightX;
+        float BackLeft = gamepad1LeftY + gamepad1LeftX + gamepad1RightX;
         float BackRight = gamepad1LeftY + gamepad1LeftX + gamepad1RightX;
         //set ranges that the wheels can go
         FrontRight = Range.clip(FrontRight, -1, 1);
@@ -56,6 +56,7 @@ public class mecanumDrive extends OpMode {
         telemetry.addData("f right pwr", "front right pwr: " + String.format("%.2f", FrontRight));
         telemetry.addData("b right pwr", "back right pwr: " + String.format("%.2f", BackRight));
         telemetry.addData("b left pwr", "back left pwr: " + String.format("%.2f", BackLeft));
+
 
 
         /*
