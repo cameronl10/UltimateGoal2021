@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
-@TeleOp(name = "mecanum drive")
-public class mecanumDrive extends OpMode {
+@TeleOp(name = "mecanum drive one controller")
+public class mecanumDriveOneController extends OpMode {
     private DcMotor backLeftDrive = null;
     private DcMotor backRightDrive = null;
     private DcMotor frontLeftDrive = null;
@@ -63,10 +63,10 @@ public class mecanumDrive extends OpMode {
         Arm code in gamepad two
          */
         //conditional statements to check if input towards arm is active, pressing y raises arm, pressing a lowers arm, no inputs brakes the arm.
-        if(gamepad2.y){
+        if(gamepad1.y){
             armMotorLeft.setPower(1 * 0.3);
             armMotorRight.setPower(1*-0.3);
-        }else  if(gamepad2.a){
+        }else  if(gamepad1.a){
             armMotorLeft.setPower(1*-0.3);
             armMotorRight.setPower(1*0.3);
         }else{
@@ -76,11 +76,11 @@ public class mecanumDrive extends OpMode {
             armMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
         //set servo position to  180 degrees
-        if(gamepad2.right_bumper){
+        if(gamepad1.right_bumper){
             armServo.setPosition(1);
         }
         //set servo position to 0 degrees
-        if(gamepad2.left_bumper){
+        if(gamepad1.left_bumper){
             armServo.setPosition(0);
         }
 
