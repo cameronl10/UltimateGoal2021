@@ -4,7 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
-@TeleOp(name = "mecanum drive")
+
+@TeleOp(name="Mecanum Drive")
 public class mecanumDrive extends OpMode {
     private DcMotor backLeftDrive = null;
     private DcMotor backRightDrive = null;
@@ -13,20 +14,20 @@ public class mecanumDrive extends OpMode {
     private DcMotor armMotorLeft = null;
     private DcMotor armMotorRight = null;
     private Servo armServo = null;
+
     @Override
     public void init() {
-        backLeftDrive =hardwareMap.get(DcMotor.class,"back_left");
-        backRightDrive = hardwareMap.get(DcMotor.class,"back_right");
-        frontLeftDrive = hardwareMap.get(DcMotor.class,"front_left");
-        frontRightDrive = hardwareMap.get(DcMotor.class,"front_right");
-        armMotorLeft = hardwareMap.get(DcMotor.class,"arm_left");
-        armMotorRight = hardwareMap.get(DcMotor.class,"arm_right");
-        armServo = hardwareMap.get(Servo.class,"arm_servo");
+        backLeftDrive = hardwareMap.get(DcMotor.class, "back_left");
+        backRightDrive = hardwareMap.get(DcMotor.class, "back_right");
+        frontLeftDrive = hardwareMap.get(DcMotor.class, "front_left");
+        frontRightDrive = hardwareMap.get(DcMotor.class, "front_right");
+        armMotorLeft = hardwareMap.get(DcMotor.class, "arm_left");
+        armMotorRight = hardwareMap.get(DcMotor.class, "arm_right");
+        armServo = hardwareMap.get(Servo.class, "arm_servo");
     }
 
     @Override
     public void loop() {
-
         /*
         Driving Code in gamepad one
          */
@@ -38,12 +39,12 @@ public class mecanumDrive extends OpMode {
         float FrontRight = gamepad1LeftY - gamepad1LeftX + gamepad1RightX;
         float BackLeft = gamepad1LeftY + gamepad1LeftX + gamepad1RightX;
         float BackRight = gamepad1LeftY + gamepad1LeftX + gamepad1RightX;
-        //set ranges that the wheels can go
+
+        // Set the ranges that the wheels can go
         FrontRight = Range.clip(FrontRight, -1, 1);
         FrontLeft = Range.clip(FrontLeft, -1, 1);
         BackLeft = Range.clip(BackLeft, -1, 1);
         BackRight = Range.clip(BackRight, -1, 1);
-
 
         frontLeftDrive.setPower(FrontLeft);
         frontRightDrive.setPower(FrontRight);
@@ -57,36 +58,32 @@ public class mecanumDrive extends OpMode {
         telemetry.addData("b right pwr", "back right pwr: " + String.format("%.2f", BackRight));
         telemetry.addData("b left pwr", "back left pwr: " + String.format("%.2f", BackLeft));
 
-
-
         /*
         Arm code in gamepad two
          */
-        //conditional statements to check if input towards arm is active, pressing y raises arm, pressing a lowers arm, no inputs brakes the arm.
-        if(gamepad2.y){
+        // Conditional statements to check if input towards arm is active (y raises arm, a lowers arm, no inputs brakes the arm)
+        if (gamepad2.y) {
             armMotorLeft.setPower(1 * 0.3);
-            armMotorRight.setPower(1*-0.3);
-        }else  if(gamepad2.a){
-            armMotorLeft.setPower(1*-0.3);
-            armMotorRight.setPower(1*0.3);
-        }else{
+            armMotorRight.setPower(1 * -0.3);
+        } else if (gamepad2.a) {
+            armMotorLeft.setPower(1 * -0.3);
+            armMotorRight.setPower(1 * 0.3);
+        } else {
             armMotorLeft.setPower(0);
             armMotorRight.setPower(0);
             armMotorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             armMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
-        //set servo position to  180 degrees
-        if(gamepad2.right_bumper){
+        // Set servo position to 180 degrees
+        if (gamepad2.right_bumper) {
             armServo.setPosition(1);
         }
-        //set servo position to 0 degrees
-        if(gamepad2.left_bumper){
+        // Set servo position to 0 degrees
+        if (gamepad2.left_bumper) {
             armServo.setPosition(0);
         }
 
-        telemetry.addData("arm motor","arm motor power" + String.format("%.2f",armMotorLeft.getPower()));
-        telemetry.addData("servo psn","right servo position" + String.format("%.2f",armServo.getPosition()));
-
-
+        telemetry.addData("arm motor", "arm motor power" + String.format("%.2f", armMotorLeft.getPower()));
+        telemetry.addData("servo psn", "right servo position" + String.format("%.2f", armServo.getPosition()));
     }
 }
