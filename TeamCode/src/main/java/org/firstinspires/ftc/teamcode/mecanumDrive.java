@@ -15,6 +15,9 @@ public class mecanumDrive extends OpMode {
     private DcMotor armMotorRight = null;
     private Servo armServo = null;
 
+    private Boolean gamepad2Active = true;
+    private GamePad armGamepad;
+
     @Override
     public void init() {
         backLeftDrive = hardwareMap.get(DcMotor.class, "back_left");
@@ -59,13 +62,19 @@ public class mecanumDrive extends OpMode {
         telemetry.addData("b left pwr", "back left pwr: " + String.format("%.2f", BackLeft));
 
         /*
-        Arm code in gamepad two
-         */
+        Arm code
+        */
+        if (gamepad2Active == true) {
+            armGamepad = gamepad2;
+        } else {
+            armGamepad = gamepad1;
+        }
+
         // Conditional statements to check if input towards arm is active (y raises arm, a lowers arm, no inputs brakes the arm)
-        if (gamepad2.y) {
+        if (armGamepad.y) {
             armMotorLeft.setPower(1 * 0.3);
             armMotorRight.setPower(1 * -0.3);
-        } else if (gamepad2.a) {
+        } else if (armGamepad.a) {
             armMotorLeft.setPower(1 * -0.3);
             armMotorRight.setPower(1 * 0.3);
         } else {
@@ -75,11 +84,11 @@ public class mecanumDrive extends OpMode {
             armMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
         // Set servo position to 180 degrees
-        if (gamepad2.right_bumper) {
+        if (armGamepad.right_bumper) {
             armServo.setPosition(1);
         }
         // Set servo position to 0 degrees
-        if (gamepad2.left_bumper) {
+        if (armGamepad.left_bumper) {
             armServo.setPosition(0);
         }
 
