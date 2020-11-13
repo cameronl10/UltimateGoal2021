@@ -38,9 +38,9 @@ public class mecanumDrive extends OpMode {
         float gamepad1LeftX = gamepad1.left_stick_x;
         float gamepad1RightX = gamepad1.right_stick_x;
 
-        float FrontLeft = gamepad1LeftY - gamepad1LeftX + gamepad1RightX;
+        float FrontLeft = -gamepad1LeftY - gamepad1LeftX + gamepad1RightX;
         float FrontRight = gamepad1LeftY - gamepad1LeftX + gamepad1RightX;
-        float BackLeft = gamepad1LeftY + gamepad1LeftX + gamepad1RightX;
+        float BackLeft = -gamepad1LeftY + gamepad1LeftX + gamepad1RightX;
         float BackRight = gamepad1LeftY + gamepad1LeftX + gamepad1RightX;
 
         // Set the ranges that the wheels can go
