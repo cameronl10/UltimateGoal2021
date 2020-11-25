@@ -12,7 +12,7 @@ public class mecanumDrive extends OpMode {
     private DcMotor frontRightDrive = null;
     private DcMotor armMotorLeft = null;
     private DcMotor armMotorRight = null;
-    private Servo armServo = null;
+    private Servo clawServo = null;
     @Override
     public void init() {
         backLeftDrive =hardwareMap.get(DcMotor.class,"back_left");
@@ -21,7 +21,9 @@ public class mecanumDrive extends OpMode {
         frontRightDrive = hardwareMap.get(DcMotor.class,"front_right");
         armMotorLeft = hardwareMap.get(DcMotor.class,"arm_left");
         armMotorRight = hardwareMap.get(DcMotor.class,"arm_right");
-        armServo = hardwareMap.get(Servo.class,"arm_servo");
+        clawServo = hardwareMap.get(Servo.class,"arm_servo");
+        // prevents moving hand from hitting the arm
+        clawServo.scaleRange(0.2, 1);
     }
 
     @Override
@@ -75,17 +77,17 @@ public class mecanumDrive extends OpMode {
             armMotorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             armMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
-        //set servo position to  180 degrees
-        if(gamepad2.right_bumper){
-            armServo.setPosition(1);
+        //set claw position to 180 degrees
+        if (gamepad2.right_bumper){
+            clawServo.setPosition(clawServo.getPosition() + 0.1);
         }
-        //set servo position to 0 degrees
-        if(gamepad2.left_bumper){
-            armServo.setPosition(0);
+        //set claw position to 0 degrees
+        if (gamepad2.left_bumper){
+            clawServo.setPosition(clawServo.getPosition() - 0.1);
         }
 
         telemetry.addData("arm motor","arm motor power" + String.format("%.2f",armMotorLeft.getPower()));
-        telemetry.addData("servo psn","right servo position" + String.format("%.2f",armServo.getPosition()));
+        telemetry.addData("servo psn","right servo position" + String.format("%.2f",clawServo.getPosition()));
 
 
     }
