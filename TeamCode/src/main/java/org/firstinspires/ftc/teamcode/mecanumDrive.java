@@ -71,12 +71,13 @@ public class mecanumDrive extends OpMode {
         }
 
         // Conditional statements to check if input towards arm is active (y raises arm, a lowers arm, no inputs brakes the arm)
+        float armPower = 0.3;
         if (armGamepad.y) {
-            armMotorLeft.setPower(1 * 0.3);
-            armMotorRight.setPower(1 * -0.3);
+            armMotorLeft.setPower(1 * armPower);
+            armMotorRight.setPower(1 * -armPower);
         } else if (armGamepad.a) {
-            armMotorLeft.setPower(1 * -0.3);
-            armMotorRight.setPower(1 * 0.3);
+            armMotorLeft.setPower(1 * -armPower);
+            armMotorRight.setPower(1 * armPower);
         } else {
             armMotorLeft.setPower(0);
             armMotorRight.setPower(0);
