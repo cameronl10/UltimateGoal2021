@@ -30,10 +30,13 @@ public class mecanumDrive extends OpMode {
 
     @Override
     public void loop() {
-        //toggle to turn on 2 gamepad mode
+        /*toggle to turn on 2 gamepad mode
         if(gamepad1.dpad_up){
             gamepad2Active = true;
         }
+
+        */
+         gamepad2Active = true;
         /*
         Driving Code in gamepad one
          */
@@ -78,7 +81,7 @@ public class mecanumDrive extends OpMode {
         } else {
             armGamepad = gamepad1;
         }
-        double armPower = 0.2;
+        double armPower = 0.35;
         //conditional statements to check if input towards arm is active, pressing y raises arm, pressing a lowers arm, no inputs brakes the arm.
         if(armGamepad.y){
             armMotorLeft.setPower(1 * armPower);
@@ -95,11 +98,11 @@ public class mecanumDrive extends OpMode {
         //set servo position to  180 degrees
         double curArmServoPos = armServo.getPosition();
         if(armGamepad.right_bumper){
-            armServo.setPosition(curArmServoPos + 0.001);
+            armServo.setPosition(curArmServoPos + 0.005);
         }
         //set servo position to 0 degrees
         if(armGamepad.left_bumper){
-            armServo.setPosition(curArmServoPos - 0.001);
+            armServo.setPosition(curArmServoPos - 0.005);
         }
 
         telemetry.addData("arm motor","arm motor power" + String.format("%.2f",armMotorLeft.getPower()));

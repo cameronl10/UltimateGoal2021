@@ -33,10 +33,10 @@ public class autonomusTest extends LinearOpMode {
 
         waitForStart();
         forward(2.6);
-        armForward(0.1);
-        armBackward(0.1);
+
 
         telemetry.addData("total time","seconds:", totalTime);
+        telemetry.update();
     }
     public void stop(double x) {
         frontLeftDrive.setPower(0);
